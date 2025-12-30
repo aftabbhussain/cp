@@ -149,7 +149,12 @@ vector<pair<ll, ll>> primefactors(ll n){
 
 
 void wavefunction(){
-    
+    ll a, b; cin >> a >> b;
+    ll layer = 1;
+    ll a1 = a, b1 = b;
+    while(a1 && b1){
+        a1 -= 
+    }
 }
 
 int main(){

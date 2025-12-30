@@ -149,7 +149,10 @@ vector<pair<ll, ll>> primefactors(ll n){
 
 
 void wavefunction(){
-    
+    ll n; cin >> n;
+    string s; cin >> s;
+    if(s.find("2026") != string::npos || s.find("2025") == string::npos) cout << 0 << nl;
+    else cout << 1 << nl;
 }
 
 int main(){
