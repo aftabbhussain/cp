@@ -146,34 +146,42 @@ vector<pair<ll, ll>> primefactors(ll n){
     return v;
 }
 
+ll N = 2e5+1;
+vector<ll> DP(N,-1);
+vector<vector<ll>> v(N);
+vector<ll> m(N);
+
+ll dp(ll i, vector<ll> &a){
+	if(i >= a.size()) return 0;
+	if(DP[i] != -1) return DP[i];
+	ll n = a.size();
+	ll res = dp(i+1,a);
 
 
+	ll x = a[i];
+    ll k = m[i];
+
+    if(k + x - 1 < v[x].size()){
+        ll j = v[x][k + x - 1];
+        res = max(res, x + dp(j+1,a));
+    }
+
+    return DP[i] = res;	
+
+
+}
 void wavefunction(){
-    ll n, k; cin >> n >> k;
+    ll n; cin >> n;
     vector<ll> a(n);
     vin(a,n);
-    vector<ll> cnt(n+1, 0), c(n+1,0);
-    for(auto x : a){
-        cnt[x]++;
+    for(ll i = 0; i <= n; i++) DP[i] = -1;
+    for(ll i = 0; i <= n; i++) v[i].clear();
+    for(ll i = 0; i <= n; i++) m[i] = -1;
+    for(ll i = 0; i < n; i++){
+    	v[a[i]].push_back(i);
+    	m[i] = v[a[i]].size()-1;
     }
-    for(auto &x : cnt){
-        if(x%k != 0){
-            cout << 0 << nl;
-            return;
-        }
-        x /= k;
-    }
-    ll ans = 0;
-    ll l = 0;
-    for(ll r = 0; r < n; r++){
-        c[a[r]]++;
-        while(c[a[r]] > cnt[a[r]]){
-            c[a[l]]--;
-            l++;
-        }
-        ans += (r-l+1);
-    }
-    cout << ans << nl;
+    cout << dp(0, a) << nl;
 }
 
 int main(){

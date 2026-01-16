@@ -146,34 +146,25 @@ vector<pair<ll, ll>> primefactors(ll n){
     return v;
 }
 
-
+//logic: if at a point we have multiple options for choosing a casino then its always better to choose the one which
+//has a real value >= k(don't choose lower real valued casinos) k is always going to increase anyway and we
+//are not skipping any potential better ones since its on the number line.
 
 void wavefunction(){
     ll n, k; cin >> n >> k;
-    vector<ll> a(n);
-    vin(a,n);
-    vector<ll> cnt(n+1, 0), c(n+1,0);
-    for(auto x : a){
-        cnt[x]++;
+    vector<pair<pair<ll, ll>, ll>> v;
+    for(ll i = 0; i < n; i++){
+    	ll l,r,real; cin >> l >> r >> real;
+    	v.push_back({{l, r}, real});
+
     }
-    for(auto &x : cnt){
-        if(x%k != 0){
-            cout << 0 << nl;
-            return;
-        }
-        x /= k;
+    sort(v.begin(), v.end());
+    for(ll i = 0; i < n; i++){
+    	if(v[i].second >= k && k >= v[i].first.first && k <= v[i].first.second){
+    		k = v[i].second;
+    	}
     }
-    ll ans = 0;
-    ll l = 0;
-    for(ll r = 0; r < n; r++){
-        c[a[r]]++;
-        while(c[a[r]] > cnt[a[r]]){
-            c[a[l]]--;
-            l++;
-        }
-        ans += (r-l+1);
-    }
-    cout << ans << nl;
+    cout << k << nl;
 }
 
 int main(){

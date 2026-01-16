@@ -150,12 +150,25 @@ vector<pair<ll, ll>> primefactors(ll n){
 
 void wavefunction(){
     ll n, m, k; cin >> n >> m >> k;
-    ll t = (m+1)/2;
-    ll left = k - 1, right = n - k;
-    ll d = min(max(left,right),t);
-    ll ans = max(n-1,t);
-    if(m-d >= 1) ans += 1;
-    cout << ans << nl;
+    auto f = [&](ll mid){
+    	ll l = max(1ll, k-(mid-1));
+    	ll r = min(n, l+(mid-1));
+    	while(l <= k && r <= n){
+    		if((l-1+max(l,r)+r) <= m) return true;
+    		l++;
+    		r++;
+    	}
+    	return false;
+    };
+    ll l = 1, r = 1e12;
+    while(r - l > 1){
+    	ll mid = l + (r-l)/2;
+    	if(f(mid)){
+    		l = mid;
+    	}
+    	else r = mid;
+    }
+    cout << l << nl;
 }
 
 int main(){

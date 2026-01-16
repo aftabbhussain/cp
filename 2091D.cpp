@@ -146,34 +146,17 @@ vector<pair<ll, ll>> primefactors(ll n){
     return v;
 }
 
-
-
+//Logic: In each row we can place ((m/(x+1))*x + m%(x+1))*n maximum no. of desks and each row is 
+//independent so we just binary search on the minimum no of benches.
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    vector<ll> a(n);
-    vin(a,n);
-    vector<ll> cnt(n+1, 0), c(n+1,0);
-    for(auto x : a){
-        cnt[x]++;
+    ll n, m, k; cin >> n >> m >> k;
+    ll l = 0, r = 2e9;
+    while(r - l > 1){
+    	ll x = l + (r-l)/2;
+    	if(((m/(x+1))*x + m%(x+1))*n >= k) r = x;
+    	else l = x;
     }
-    for(auto &x : cnt){
-        if(x%k != 0){
-            cout << 0 << nl;
-            return;
-        }
-        x /= k;
-    }
-    ll ans = 0;
-    ll l = 0;
-    for(ll r = 0; r < n; r++){
-        c[a[r]]++;
-        while(c[a[r]] > cnt[a[r]]){
-            c[a[l]]--;
-            l++;
-        }
-        ans += (r-l+1);
-    }
-    cout << ans << nl;
+    cout << r << nl;
 }
 
 int main(){

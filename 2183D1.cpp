@@ -13,6 +13,8 @@
 #include <set>
 #include <utility>
 #include <chrono>
+#include <queue>
+#include <unordered_map>
 using namespace std;
 
 #define nl                              "\n"
@@ -148,32 +150,50 @@ vector<pair<ll, ll>> primefactors(ll n){
 
 
 
+
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    vector<ll> a(n);
-    vin(a,n);
-    vector<ll> cnt(n+1, 0), c(n+1,0);
-    for(auto x : a){
-        cnt[x]++;
+    ll n; cin >> n;
+    vector<vector<ll>> adj(n+1);
+    for(ll i = 0; i < n-1; i++){
+    	ll u, v; cin >> u >> v;
+    	adj[u].push_back(v);
+    	adj[v].push_back(u);
     }
-    for(auto &x : cnt){
-        if(x%k != 0){
-            cout << 0 << nl;
+    queue<ll> q;
+    vector<bool> visited(n+1, 0);
+    q.push(1);
+    visited[1] = 1;
+    vector<ll> d(n+1,0);
+    while(!q.empty()){
+    	ll v = q.front();
+    	q.pop();
+    	for(auto u : adj[v]){
+    		if(!visited[u]){
+    			q.push(u);
+    			visited[u] = 1;
+    			d[u] = d[v] + 1;
+    		}
+    		
+    	}
+    }
+    map<ll,ll> freq;
+    ll mx = 0;
+    for(auto x : d){
+    	freq[x]++;
+    	mx = max(mx, freq[x]);
+    }
+    for(ll i = 1; i <= n; i++){
+        if(i != 1 && adj[i].size()-1 == mx){
+            cout << mx+1 << nl;
             return;
         }
-        x /= k;
-    }
-    ll ans = 0;
-    ll l = 0;
-    for(ll r = 0; r < n; r++){
-        c[a[r]]++;
-        while(c[a[r]] > cnt[a[r]]){
-            c[a[l]]--;
-            l++;
+        else if(i == 1 && adj[i].size() == mx){
+            cout << mx+1 << nl;
+            return;
         }
-        ans += (r-l+1);
     }
-    cout << ans << nl;
+    cout << mx << nl;
+
 }
 
 int main(){

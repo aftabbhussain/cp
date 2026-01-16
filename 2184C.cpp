@@ -146,35 +146,23 @@ vector<pair<ll, ll>> primefactors(ll n){
     return v;
 }
 
-
+map<ll,ll> DP;
+ll f(ll n, ll k){
+    if(n < k) return 1e9;
+    if(n == k) return 0;
+    if(DP.find(n) != DP.end()) return DP[n];
+    return DP[n] = 1 + min(f(n/2, k), f((n+1)/2, k));
+}
 
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    vector<ll> a(n);
-    vin(a,n);
-    vector<ll> cnt(n+1, 0), c(n+1,0);
-    for(auto x : a){
-        cnt[x]++;
-    }
-    for(auto &x : cnt){
-        if(x%k != 0){
-            cout << 0 << nl;
-            return;
-        }
-        x /= k;
-    }
-    ll ans = 0;
-    ll l = 0;
-    for(ll r = 0; r < n; r++){
-        c[a[r]]++;
-        while(c[a[r]] > cnt[a[r]]){
-            c[a[l]]--;
-            l++;
-        }
-        ans += (r-l+1);
-    }
-    cout << ans << nl;
+    DP.clear();
+    ll n, k;
+    cin >> n >> k;
+    ll ans = f(n, k);
+    if(ans >= 1e9) cout << -1 << nl;
+    else cout << ans << nl;
 }
+
 
 int main(){
 #ifndef ONLINE_JUDGE

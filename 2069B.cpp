@@ -146,34 +146,34 @@ vector<pair<ll, ll>> primefactors(ll n){
     return v;
 }
 
-
+//Logic: We can color a specific color in the grid in atmost 2 steps(1 if all are pairwise strangers)
+//just calculate the number of steps required for each of the color and then ignore the maximum,
+//as all the other colors can be made equal to this maximum steped color
 
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    vector<ll> a(n);
-    vin(a,n);
-    vector<ll> cnt(n+1, 0), c(n+1,0);
-    for(auto x : a){
-        cnt[x]++;
+    ll n, m; cin >> n >> m;
+    vector<vector<ll>> a(n, vector<ll> (m,0));
+    for(ll i = 0; i < n; i++){
+    	for(ll j = 0; j < m; j++){
+    		cin >> a[i][j];
+    	}
     }
-    for(auto &x : cnt){
-        if(x%k != 0){
-            cout << 0 << nl;
-            return;
-        }
-        x /= k;
+    vector<ll> v(n*m+1,0);
+    for(ll i = 0; i < n; i++){
+    	for(ll j = 0; j < m; j++){
+    		if(v[a[i][j]] <= 1){
+    			v[a[i][j]] = 1;
+    			if(j-1 >= 0 && a[i][j-1] == a[i][j] || j+1 < m && a[i][j+1] == a[i][j] || i-1 >= 0 && a[i-1][j] == a[i][j] ||
+    			i+1 < n && a[i+1][j] == a[i][j]) v[a[i][j]]++;
+    		}
+    	}
     }
-    ll ans = 0;
-    ll l = 0;
-    for(ll r = 0; r < n; r++){
-        c[a[r]]++;
-        while(c[a[r]] > cnt[a[r]]){
-            c[a[l]]--;
-            l++;
-        }
-        ans += (r-l+1);
+    ll mx = -1, sum = 0;
+    for(auto x : v){
+    	sum += x;
+    	mx = max(mx,x);
     }
-    cout << ans << nl;
+    cout << sum - mx << nl;
 }
 
 int main(){

@@ -146,34 +146,35 @@ vector<pair<ll, ll>> primefactors(ll n){
     return v;
 }
 
-
-
+//In this we need to apply math logic and transformations to see that we need to shift the values by the median to get
+//the minimum result and then we do this for both a and b and take the minimum of them.
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    vector<ll> a(n);
-    vin(a,n);
-    vector<ll> cnt(n+1, 0), c(n+1,0);
-    for(auto x : a){
-        cnt[x]++;
+    ll n; cin >> n;
+    string s; cin >> s;
+    vector<ll> a, b;
+    for(ll i = 0; i < n; i++){
+    	if(s[i] == 'a') a.push_back(i);
+    	else b.push_back(i);
     }
-    for(auto &x : cnt){
-        if(x%k != 0){
-            cout << 0 << nl;
-            return;
-        }
-        x /= k;
+    for(ll i = 0; i < a.size(); i++) a[i] = a[i]-i;
+    for(ll i = 0; i < b.size(); i++) b[i] = b[i]-i;
+    	debug(b);
+    
+    ll ans1 = INF, ans2 = INF;
+    if(a.size() > 0){
+    	ans1 = 0;
+    	ll pa = a.size()/2;
+    	ll meda = a[pa];
+    	for(ll i = 0; i < a.size(); i++) ans1 += abs(a[i] - meda);
     }
-    ll ans = 0;
-    ll l = 0;
-    for(ll r = 0; r < n; r++){
-        c[a[r]]++;
-        while(c[a[r]] > cnt[a[r]]){
-            c[a[l]]--;
-            l++;
-        }
-        ans += (r-l+1);
-    }
-    cout << ans << nl;
+	if(b.size() > 0){
+		ans2 = 0;
+		ll pb = b.size()/2;
+		ll medb = b[pb];
+		for(ll i = 0; i < b.size(); i++) ans2 += abs(b[i] - medb);
+	}
+	cout << min(ans1, ans2) << nl;
+
 }
 
 int main(){
