@@ -1,8 +1,1 @@
-[ rr ] = 100
-[ rr ] = 1011
-[ rr ] = 11
-[ rr ] = 11
-[ rr ] = 10
-[ rr ] = 11000100011
-[ rr ] = 10001000110
-Time measured: 0.000986 seconds.
+Time measured: 0 seconds.

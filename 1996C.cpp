@@ -147,13 +147,42 @@ vector<pair<ll, ll>> primefactors(ll n){
 }
 
 
-
+//Logic : forget about assigning the extras to other as we can assume they got assigned, we just care about changing
+//the extras so that the extra characters match to the required ones.
 void wavefunction(){
-    ll n; cin >> n;
-    vector<ll> a(n);
-    for(ll i = 0;i < n; i++){
-    	cin >> a[i];
+	ll n, q; cin >> n >> q;
+	string a, b; cin >> a >> b;
+	vector<vector<ll>> pref1(n, vector<ll> (26, 0));
+
+    pref1[0][a[0]-'a']++;
+    for(ll i = 1; i < n; i++){
+        for(ll j = 0; j < 26; j++){
+            if((a[i]-'a') == j) pref1[i][j] = pref1[i-1][j] + 1;
+            else pref1[i][j] = pref1[i-1][j];
+        }
     }
+
+    vector<vector<ll>> pref2(n, vector<ll> (26, 0));
+    pref2[0][b[0]-'a']++;
+    for(ll i = 1; i < n; i++){
+        for(ll j = 0; j < 26; j++){
+            if((b[i]-'a') == j) pref2[i][j] = pref2[i-1][j] + 1;
+            else pref2[i][j] = pref2[i-1][j];
+        }
+    }
+
+    while(q--){
+        ll l, r; cin >> l >> r;
+        l--; r--;
+        ll cnt = 0;
+        for(ll i = 0; i < 26; i++){
+            cnt += max(0ll, (pref1[r][i] - (l > 0 ? pref1[l-1][i] : 0)) - (pref2[r][i] - (l > 0 ? pref2[l-1][i] : 0)));
+
+        }
+        cout << cnt << nl;
+    }
+
+
 }
 
 int main(){

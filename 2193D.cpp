@@ -150,10 +150,26 @@ vector<pair<ll, ll>> primefactors(ll n){
 
 void wavefunction(){
     ll n; cin >> n;
-    vector<ll> a(n);
-    for(ll i = 0;i < n; i++){
-    	cin >> a[i];
+	vector<ll> a(n), b(n);
+	vin(a,n);
+	vin(b,n);
+    sort(all(a));
+    vector<ll> pref(n);
+    pref[0] = b[0];
+    for(ll i = 1; i < n; i++){
+    	pref[i] = pref[i-1] + b[i];
+    } 
+    ll ans = 0, s = 0;
+    for(ll i = n-1; i >= 0;){
+        ll x = a[i];
+        ll j = i;
+        while(j >= 0 && a[j] == x) j--;
+        s += (i-j);
+        i = j;
+        ll l = upper_bound(pref.begin(), pref.end(), s)- pref.begin();
+        ans = max(ans, x*l);
     }
+    cout << ans << nl;
 }
 
 int main(){

@@ -147,13 +147,26 @@ vector<pair<ll, ll>> primefactors(ll n){
 }
 
 
-
+//Logic: If we can't reach the destination in a straight line path , curving will make
+//it worse.
 void wavefunction(){
     ll n; cin >> n;
-    vector<ll> a(n);
-    for(ll i = 0;i < n; i++){
-    	cin >> a[i];
+    vector<pair<ll,ll>> a(n);
+    for(ll i = 0; i < n; i++){
+    	ll x, y; cin >> x >> y;
+    	a[i] = {x, y};
     }
+    ll xs, ys, xt, yt; cin >> xs >> ys >> xt >> yt;
+    long double d = sqrt((long double)(xt-xs)*(xt-xs) + (long double)(yt-ys)*(yt-ys));
+    for(ll i = 0; i < n; i++){
+    	ll x = a[i].first, y = a[i].second;
+    	long double t = sqrt((long double)(xt-x)*(xt-x) + (long double)(yt-y)*(yt-y));
+    	if(t <= d){
+    		no;
+    		return;
+    	}
+    }
+    yes;
 }
 
 int main(){

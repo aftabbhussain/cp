@@ -149,11 +149,22 @@ vector<pair<ll, ll>> primefactors(ll n){
 
 
 void wavefunction(){
-    ll n; cin >> n;
-    vector<ll> a(n);
-    for(ll i = 0;i < n; i++){
-    	cin >> a[i];
+    ll n, m, k; cin >> n >> m >> k;
+    string s; cin >> s;
+    s = "L" + s + "L";
+    vector<ll> dp(n+2, INF);
+    dp[n+1] = 0;
+    for(ll i = n; i >= 0; i--){
+        if(s[i] == 'C') dp[i] = INF;
+        else if(s[i] == 'W') dp[i] = 1 + dp[i+1];
+        else{
+            for(ll j = 1; j <= m; j++){
+                if(i+j <= n+1) dp[i] = min(dp[i], dp[i+j]);
+            }
+        }
     }
+    if(dp[0] <= k) yes;
+    else no;
 }
 
 int main(){

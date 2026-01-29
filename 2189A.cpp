@@ -149,11 +149,19 @@ vector<pair<ll, ll>> primefactors(ll n){
 
 
 void wavefunction(){
-    ll n; cin >> n;
-    vector<ll> a(n);
-    for(ll i = 0;i < n; i++){
-    	cin >> a[i];
-    }
+    int n, h, l;
+        cin >> n >> h >> l;
+
+        int sumRows = 0, sumCols = 0;
+        for (int i = 0; i < n; i++) {
+            int x;
+            cin >> x;
+            if (x <= h) sumRows++;
+            if (x <= l) sumCols++;
+        }
+
+        int answer = min({sumRows, sumCols, n / 2});
+        cout << answer << "\n";
 }
 
 int main(){

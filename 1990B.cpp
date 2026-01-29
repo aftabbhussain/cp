@@ -147,13 +147,23 @@ vector<pair<ll, ll>> primefactors(ll n){
 }
 
 
-
+//Logic : at the left and right end of [y...x] try making smaller prefix and suffix sums.
 void wavefunction(){
-    ll n; cin >> n;
-    vector<ll> a(n);
-    for(ll i = 0;i < n; i++){
-    	cin >> a[i];
+    ll n, x, y; cin >> n >> x >> y;
+    vector<ll> a(n+1, 1);
+    ll e = -1;
+    for(ll i = y-1; i >= 1; i--){
+    	a[i] = a[i]*e;
+    	e = -1*e;
     }
+    e = -1;
+    for(ll i = x+1; i <= n; i++){
+    	a[i] = a[i]*e;
+    	e = -1*e;
+    }
+    for(ll i = 1; i <= n; i++) cout << a[i] << " ";
+    cout << nl;
+
 }
 
 int main(){

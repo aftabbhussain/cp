@@ -149,10 +149,20 @@ vector<pair<ll, ll>> primefactors(ll n){
 
 
 void wavefunction(){
-    ll n; cin >> n;
-    vector<ll> a(n);
-    for(ll i = 0;i < n; i++){
-    	cin >> a[i];
+    ll n, m, q; cin >> n >> m >> q;
+    vector<ll> b(m);
+    vin(b, m);
+    sort(all(b));
+    for(ll i = 0; i < q; i++){
+    	ll x; cin >> x;
+    	ll r = upper_bound(b.begin(), b.end(), x) - b.begin(); // pos of first teacher to the right
+        if(r == m){
+            cout << n - b[m-1] << nl;
+        }
+        else if(r == 0) cout << b[0] - 1 << nl;
+        else{
+            cout << (b[r] - b[r-1])/2 << nl;
+        }
     }
 }
 

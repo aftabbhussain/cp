@@ -147,13 +147,20 @@ vector<pair<ll, ll>> primefactors(ll n){
 }
 
 
-
+//Logic: Divide the n elements into three groups where the third group only has 1 element and both
+//of its values are considered into sum;
 void wavefunction(){
     ll n; cin >> n;
-    vector<ll> a(n);
-    for(ll i = 0;i < n; i++){
-    	cin >> a[i];
-    }
+    vector<ll> a(n), b(n);
+    vin(a,n);
+    vin(b,n);
+    ll sum = 0;
+    for(ll i = 0; i < n; i++) sum += max(a[i], b[i]);
+    ll ans = -INF;
+	for(ll i = 0; i < n; i++){
+		ans = max(ans, sum-max(a[i], b[i])+a[i]+b[i]);
+	}
+	cout << ans << nl;
 }
 
 int main(){

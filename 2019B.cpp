@@ -147,13 +147,25 @@ vector<pair<ll, ll>> primefactors(ll n){
 }
 
 
-
+//Logic : Pure combinatorics, for each of the possible points count how many intervals
+//cover that point. Count in two parts 1.The middle points of two consecutive given points
+//and 2. for individual points(there are only 1 point covering that much intervals)
 void wavefunction(){
-    ll n; cin >> n;
+    ll n, q; cin >> n >> q;
     vector<ll> a(n);
-    for(ll i = 0;i < n; i++){
-    	cin >> a[i];
+    vin(a, n);
+    map<ll,ll> mp;
+    for(ll i = 1; i <= n-1; i++){
+    	mp[i*(n-i)] += (a[i+1-1]-a[i-1]-1);
     }
+    for(ll i = 1; i <= n; i++){
+    	mp[(i-1)*(n-(i-1)) + (n-i)]++;
+    }
+    for(ll i = 0; i < q; i++){
+    	ll k; cin >> k;
+    	cout << mp[k] << " ";
+    }
+    cout << nl;
 }
 
 int main(){
