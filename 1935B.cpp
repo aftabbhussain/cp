@@ -147,10 +147,44 @@ vector<pair<ll, ll>> primefactors(ll n){
 }
 
 
-
+//Logic : if we can split for a k then for k-1 its also possible so we need to check for only k =2.
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    cout << (k-1)*(n/k) + (n%k -1 > 0 ? (n%k) : 1) << nl;	
+    ll n; cin >> n;
+    vector<ll> a(n);
+    vin(a, n);
+    vector<ll> prefmex(n);
+    set<ll> st;
+    ll x = 0;
+    for(ll i = 0; i < n; i++){
+        st.insert(a[i]);
+        while(st.find(x) != st.end()){
+            x++;
+        }
+        prefmex[i] = x;
+    }
+    while(!st.empty()) st.erase(st.begin());
+    vector<ll> suffmex(n);
+    x = 0;
+    for(ll i = n-1; i >= 0; i--){
+        st.insert(a[i]);
+        while(st.find(x) != st.end()){
+            x++;
+        }
+        suffmex[i] = x;
+    }
+    ll b = -1;
+    for(ll i = 0; i < n-1; i++){
+        if(prefmex[i] == suffmex[i+1]){
+            b = i;
+            break;
+        }
+    }
+    if(b == -1) cout << -1 << nl;
+    else{
+        cout << 2 << nl;
+        cout << 1 << " " << b+1 << nl;
+        cout << b+2 << " " << n << nl;
+    }
 }
 
 int main(){

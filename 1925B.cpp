@@ -147,10 +147,21 @@ vector<pair<ll, ll>> primefactors(ll n){
 }
 
 
-
+//Logic: gcd(a1, a2, a3, a4,...) = gcd(a1, a1+a2, a1+a2+a3, a1+a2+a3+a4) but a1+a2+a3+a4 = x
+//so the answer must be a divisor of x which can be checked in sqrt(x);
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    cout << (k-1)*(n/k) + (n%k -1 > 0 ? (n%k) : 1) << nl;	
+    ll x, n; cin >> x >> n;
+    debug(n);
+    ll ans = 1;
+    for(ll d = 1; d*d <= x; d++){
+    	if(x%d == 0){
+    		if(x >= n*d) ans = max(ans, d);
+    		if(x >= n*(x/d)) ans = max(ans, x/d);
+    	}
+    	
+    }
+
+    cout << ans << nl;
 }
 
 int main(){

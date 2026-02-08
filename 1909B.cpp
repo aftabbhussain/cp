@@ -147,10 +147,27 @@ vector<pair<ll, ll>> primefactors(ll n){
 }
 
 
-
+//Logic: Taking the Mod with 2^j results in a number which has the lefmost j bits, so since the answer
+//exists there must be a j from 0 to 60, such that the numbers resulting from taking the last j bits
+//of all the numbers result into two distinct groups
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    cout << (k-1)*(n/k) + (n%k -1 > 0 ? (n%k) : 1) << nl;	
+    ll n; cin >> n;
+    vector<ll> a(n);
+    vin(a, n);
+    auto chk = [&](ll k){
+    	set<ll> st;
+    	for(auto &x : a){
+    		st.insert(x%k);
+    	}
+    	return st.size() == 2;
+    };
+    for(ll j = 0; j < 60; j++){
+    	ll k = (1ll << j);
+    	if(chk(k)){
+    		cout << k << nl;
+    		return;
+    	}
+    }
 }
 
 int main(){

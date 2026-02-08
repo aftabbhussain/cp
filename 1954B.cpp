@@ -147,10 +147,32 @@ vector<pair<ll, ll>> primefactors(ll n){
 }
 
 
-
+//Logic there are three ways to make the array non beautiful
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    cout << (k-1)*(n/k) + (n%k -1 > 0 ? (n%k) : 1) << nl;	
+    ll n; cin >> n;
+    ll ans = INF;
+    vector<ll> a(n);
+    vin(a, n);
+    ll x = a[0];
+    ll mx = 0;
+    ll i = 0, j = 0;
+    while(i < n){
+        if(a[i] == x){
+            ll j = i;
+            while(j < n && a[j] == x) j++;
+            mx = max(mx, j-i);
+            ans = min(ans, j-i);
+            i = j;
+            continue;
+        }
+        i++;
+    }
+    if(mx == n){
+        cout << -1 << nl;
+        return;
+    }
+    cout << ans << nl;
+
 }
 
 int main(){

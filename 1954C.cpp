@@ -147,10 +147,27 @@ vector<pair<ll, ll>> primefactors(ll n){
 }
 
 
-
+//If the sum of two numbers are fixed, then to get the maximum product the numbers should
+//be as close as possible to each other. Now to get the minimum difference, make one number strictly
+//greater than the other by flipping the msd to it and the rest lower digits to the other.
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    cout << (k-1)*(n/k) + (n%k -1 > 0 ? (n%k) : 1) << nl;	
+    string x, y; cin >> x >> y;
+    bool flag = true;
+    for(ll i = 0; i < x.length(); i++){
+    	if(x[i] == y[i]) continue;
+    	if(flag){
+    		flag = false;
+    		char c = x[i];
+    		x[i] = max(x[i], y[i]);
+    		y[i] = min(c, y[i]);
+    	}
+    	else{
+    		char c = y[i];
+    		y[i] = max(y[i], x[i]);
+    		x[i] = min(c, x[i]);
+    	}
+    }
+    cout << x << nl << y << nl;
 }
 
 int main(){

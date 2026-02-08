@@ -149,8 +149,28 @@ vector<pair<ll, ll>> primefactors(ll n){
 
 
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    cout << (k-1)*(n/k) + (n%k -1 > 0 ? (n%k) : 1) << nl;	
+    ll n; cin >> n;
+    vector<ll> a(n+1);
+    a[n] = 1;
+    a[n-1] = n;
+    set<ll> st;
+    st.insert(n);
+    st.insert(1);
+    for(ll i = n-2; i >= 1; i--){
+    	ll x = abs(i-a[i+1]), y = abs(i+a[i+1]);
+    	if(x >= 1 && x <= n && abs(x-a[i+1])%i == 0 && st.find(x) == st.end()){
+    		st.insert(x);
+    		a[i] = x;
+    	} 
+    	else{
+    		st.insert(y);
+    		a[i] = y;
+
+    	}     
+    }
+    for(ll i = 1; i <= n; i++) cout << a[i] << " ";
+    cout << nl;
+
 }
 
 int main(){

@@ -149,9 +149,21 @@ vector<pair<ll, ll>> primefactors(ll n){
 
 
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    cout << (k-1)*(n/k) + (n%k -1 > 0 ? (n%k) : 1) << nl;	
+    long long x, y, k;
+	cin >> x >> y >> k;
+	while (k > 0 && x != 1) {
+		long long ost = (x / y + 1) * y - x;
+                ost = max(1ll, ost);
+                ost = min(ost, k);
+                x += ost;
+		while (x % y == 0) {
+			x /= y;
+		}
+		k -= ost;
+	}
+	cout << x + k % (y - 1) << '\n';
 }
+
 
 int main(){
 #ifndef ONLINE_JUDGE

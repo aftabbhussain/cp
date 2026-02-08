@@ -146,11 +146,28 @@ vector<pair<ll, ll>> primefactors(ll n){
     return v;
 }
 
-
-
+//Logic : Greedy works clearly if there were only {1,3,6} coins, as one is divisor of other.
+//Now lets, include 15, Its better to use 1 atmost twice, 3 atmost once and 6 atmost twice (15+3 = 18).
+//And also we should not use 1 3's and 2 6's together because we can use 15, so the sum only gets to 11 or
+//14 max < 15 so greedy works for {1,3,6,15}, for 10 try all the numbers from 0, 1, 2 only.
+ll getans(ll n){
+    ll res = 0;
+    res += n/15;
+    n %= 15;
+    res += n/6;
+    n %= 6;
+    res += n/3;
+    n %= 3;
+    res += n;
+    return res;
+}
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    cout << (k-1)*(n/k) + (n%k -1 > 0 ? (n%k) : 1) << nl;	
+    ll n; cin >> n;
+    ll ans = INF;
+    for(ll k = 0; k < 3; k++){
+        if(n-10*k >= 0) ans = min(ans, getans(n-10*k)+k);
+    }
+    cout << ans << nl;
 }
 
 int main(){

@@ -147,10 +147,35 @@ vector<pair<ll, ll>> primefactors(ll n){
 }
 
 
-
+//Logic: Instead of calculating with math, try doing the literal simulations
+//there are only two candidate positions where swpping with makes sense.
 void wavefunction(){
     ll n, k; cin >> n >> k;
-    cout << (k-1)*(n/k) + (n%k -1 > 0 ? (n%k) : 1) << nl;	
+    k--;
+    vector<ll> a(n);
+    vin(a, n);
+    auto sim = [&](ll start){
+        ll res = (start > 0);
+        for(ll i = start+1; i < n; i++){
+            if(a[i] > a[start]) break;
+            res++;
+        }
+        return res;
+    };
+    ll ans = 0;
+    swap(a[0], a[k]);
+    ans = sim(0);
+    swap(a[0], a[k]);
+    for(ll i = 0; i < k; i++){
+        if(a[i] > a[k]){
+            swap(a[k], a[i]);
+            ans = max(ans, sim(i));
+            swap(a[i], a[k]);
+            break;
+        }
+    }
+    cout << ans << nl;
+
 }
 
 int main(){

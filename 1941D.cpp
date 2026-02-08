@@ -147,10 +147,36 @@ vector<pair<ll, ll>> primefactors(ll n){
 }
 
 
-
+//Logic: we keep two sets of which one is the active set. Now before a throw, the active set has
+//all the positions at which there could be a ball, so for all of these positions we pop it and in the
+//other set we push the new positions as these older positions are no longer useful to us, at the end the
+//set becomes empty and then we swap roles to make the next set active.
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    cout << (k-1)*(n/k) + (n%k -1 > 0 ? (n%k) : 1) << nl;	
+    ll n, m, x; cin >> n >> m >> x;
+    vector<set<ll>> st(2);
+    ll ix = 0;
+    st[ix].insert(x);
+    for(ll i = 0; i < m; i++){
+        ll r; cin >> r;
+        char c; cin >> c;
+        while(!st[ix].empty()){
+            ll u = *st[ix].begin();
+            st[ix].erase(u);
+            if(c == '0' || c == '?'){
+                st[ix^1].insert((u+r-1)%n + 1);
+            }
+            if(c == '1' || c == '?'){
+                st[ix^1].insert((u-r-1+n)%n +1);
+            }
+
+        }
+        ix = ix^1;
+        
+    }
+    debug(st[ix]);
+    cout << st[ix].size() << nl;
+    for(auto x : st[ix]) cout << x << " ";
+    cout << nl;
 }
 
 int main(){

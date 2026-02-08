@@ -138,7 +138,7 @@ vector<pair<ll, ll>> primefactors(ll n){
             n /= i;
         }
     }
-    if(n > 1) mp[n]++;
+    if(n > 1) mp[n]++; 
     vector<pair<ll,ll>> v;
     for(auto it = mp.begin(); it != mp.end(); it++){
         v.push_back({it->first, it->second});
@@ -149,8 +149,16 @@ vector<pair<ll, ll>> primefactors(ll n){
 
 
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    cout << (k-1)*(n/k) + (n%k -1 > 0 ? (n%k) : 1) << nl;	
+    ll n; cin >> n;
+    ll cnt = 0, sum = 0;
+    for(ll i = 0; i < n; i++){
+    	ll x; cin >> x;
+    	sum += x;
+    	if(x&1) cnt++;
+    	if(i == 0) cout << sum << " ";
+    	else cout << sum - (cnt/3 + (cnt%3 == 1)) << " ";
+    }
+    cout << nl;
 }
 
 int main(){

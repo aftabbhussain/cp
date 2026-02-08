@@ -147,10 +147,25 @@ vector<pair<ll, ll>> primefactors(ll n){
 }
 
 
-
+//Logic: If a subarray of length >= 3 has median as value x then the who array
+//can be made equal to x.
+//If there is no subarray of length 3 whose median is 𝑝 then it is impossible to 
+//make the whole array equal to p
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    cout << (k-1)*(n/k) + (n%k -1 > 0 ? (n%k) : 1) << nl;	
+    ll n; cin >> n;
+    vector<ll> a(n);
+    vin(a, n);
+    ll ans = -1;
+    if(n == 2){
+    	cout << min(a[0], a[1]) << nl;
+    	return;
+    }
+    for(ll i = 0; i+2 < n; i++){
+    	vector<ll> x = {a[i], a[i+1], a[i+2]};
+    	sort(all(x));
+    	ans = max(ans, x[1]);
+    }
+    cout << ans << nl;
 }
 
 int main(){

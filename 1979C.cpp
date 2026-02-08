@@ -67,6 +67,10 @@ ll gcd(ll a, ll b){
     return gcd(b, a % b);
 }
 
+ll lcm(ll a, ll b){
+	return (a*b)/gcd(a, b);
+}
+
 ll power(ll a, ll b, ll mod = MOD){
     ll res = 1;
     while (b > 0){
@@ -147,10 +151,28 @@ vector<pair<ll, ll>> primefactors(ll n){
 }
 
 
-
+//Logic: try to find out the neccesary and then sufficient condition for the answer to exist.
 void wavefunction(){
-    ll n, k; cin >> n >> k;
-    cout << (k-1)*(n/k) + (n%k -1 > 0 ? (n%k) : 1) << nl;	
+    ll n; cin >> n;
+    vector<ll> k(n);
+    vin(k, n);
+    ll d = 1;
+    for(ll i = 0; i < n; i++){
+    	d = lcm(d, k[i]);
+    }
+    vector<ll> a(n);
+    ll sum = 0;
+    for(ll i = 0; i < n; i++){
+    	a[i] = d/k[i];
+    	sum += a[i];
+    }
+    if(sum < d){
+    	pvec(a);
+    	cout << nl;
+    }
+    else{
+    	cout << -1 << nl;
+    }
 }
 
 int main(){
