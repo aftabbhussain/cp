@@ -149,17 +149,27 @@ vector<pair<ll, ll>> primefactors(ll n){
 
 
 void wavefunction(){
-    ll n; cin >> n;
-    vector<ll> a(n), p(n);
-    vin(p,n); vin(a,n);
-    vector<ll> c;
-    c.push_back(a[0]);
-    for(ll i = 1; i < n; i++){
-    	if(a[i] != a[i-1]) c.push_back(a[i]);
-    }
-    ll i = 0, j = 0;
-    while(i < n)
+    ll n; 
+    cin >> n;
+    string s, t; 
+    cin >> s >> t;
+
+    ll x = 0, y = 0;
+    for(ll i = 0; i < n; i++)
+        if(s[i] != t[i]) x++;
+
+    reverse(t.begin(), t.end());
+    for(ll i = 0; i < n; i++)
+        if(s[i] != t[i]) y++;
+
+    ll ans1 = 2*x - (x % 2);
+
+    ll ans2;
+    if(y == 0) ans2 = 1;
+    else ans2 = 2*y - (1 - y % 2);
+    cout << min(ans1, ans2) << nl;
 }
+
 
 int main(){
 #ifndef ONLINE_JUDGE

@@ -145,20 +145,36 @@ vector<pair<ll, ll>> primefactors(ll n){
     }
     return v;
 }
-
+#include <stack>
 
 
 void wavefunction(){
     ll n; cin >> n;
-    vector<ll> a(n), p(n);
-    vin(p,n); vin(a,n);
-    vector<ll> c;
-    c.push_back(a[0]);
-    for(ll i = 1; i < n; i++){
-    	if(a[i] != a[i-1]) c.push_back(a[i]);
+    string s; cin >> s;
+    vector<ll> freq(26,0);
+    for(auto x : s){
+    	freq[x-'a']++;
     }
-    ll i = 0, j = 0;
-    while(i < n)
+    ll j = 25;
+    while(j >= 0 && freq[j]){
+    	freq.pop_back();
+    	j--;
+    }
+    sort(all(freq));
+    stack<ll> st;
+    for(auto x : freq){
+    	if(x) st.push(x);
+    }
+    while(st.size() > 1){
+    	ll a = st.top();
+    	st.pop();
+    	ll b = st.top();
+    	st.pop();
+    	st.push(abs(a-b));
+    }
+    cout << st.top() << nl;
+
+
 }
 
 int main(){

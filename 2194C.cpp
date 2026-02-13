@@ -149,16 +149,61 @@ vector<pair<ll, ll>> primefactors(ll n){
 
 
 void wavefunction(){
-    ll n; cin >> n;
-    vector<ll> a(n), p(n);
-    vin(p,n); vin(a,n);
-    vector<ll> c;
-    c.push_back(a[0]);
-    for(ll i = 1; i < n; i++){
-    	if(a[i] != a[i-1]) c.push_back(a[i]);
+    ll n, k; cin >> n >> k;
+    vector<string> a(k);
+    for(ll i = 0; i < k; i++){
+    	cin >> a[i];
     }
-    ll i = 0, j = 0;
-    while(i < n)
+    vector<set<char>> v(n);
+    for(ll i = 0; i < n; i++){
+    	for(ll j = 0; j < k; j++){
+    		v[i].insert(a[j][i]);
+    	}
+    }
+    auto chk = [&](ll inf){
+    	string s(n, '.');
+    	for(ll i = 0; i < inf; i++){
+    		bool ff = false;
+    		for(char x = 'a'; x <= 'z'; x++){
+    			bool flag = true;
+    			for(ll j = i; j < n; j += inf){
+    				if(v[j].find(x) == v[j].end()){
+    					flag = false;
+    					break;
+    				}
+    			}
+    			if(flag){
+    				for(ll j = i; j < n; j += inf){
+    					s[j] = x;
+    				}
+    				ff = true;
+    			}
+    		}
+    		if(!ff) return string("");
+    	}
+    	return s;
+    };
+    string res = "";
+    ll mininf = n+1;
+    for(ll inf = 1; inf*inf <= n; inf++){
+    	if(n%inf != 0) continue;
+
+    	string r1 = chk(inf);
+    	if(r1.length() > 0 && inf < mininf){
+    		mininf = inf;
+    		res = r1;
+    	}
+    	ll other = n/inf;
+    	if(other != inf){
+    		string r2 = chk(other);
+    		if(r2.length() > 0 && other < mininf){
+    			mininf = other;
+    			res = r2;
+    		}
+    	}
+
+    }
+    cout << res << nl;
 }
 
 int main(){

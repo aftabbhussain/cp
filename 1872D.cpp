@@ -66,6 +66,9 @@ ll gcd(ll a, ll b){
     if (b == 0) return a;
     return gcd(b, a % b);
 }
+ll lcm(ll a, ll b){
+	return (a*b)/gcd(a,b);
+}
 
 ll power(ll a, ll b, ll mod = MOD){
     ll res = 1;
@@ -147,18 +150,16 @@ vector<pair<ll, ll>> primefactors(ll n){
 }
 
 
-
+ll sn(ll n){
+	return n*(n+1)/2;
+}
 void wavefunction(){
-    ll n; cin >> n;
-    vector<ll> a(n), p(n);
-    vin(p,n); vin(a,n);
-    vector<ll> c;
-    c.push_back(a[0]);
-    for(ll i = 1; i < n; i++){
-    	if(a[i] != a[i-1]) c.push_back(a[i]);
-    }
-    ll i = 0, j = 0;
-    while(i < n)
+    ll n, x, y; cin >> n >> x >> y;
+    ll a = (n/x) - (n/lcm(x,y));
+    ll b = (n/y) - (n/lcm(x,y));
+    ll ans = sn(n) - sn(n-a);
+    ans -= sn(b);
+    cout << ans << nl;
 }
 
 int main(){

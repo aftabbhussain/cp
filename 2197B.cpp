@@ -150,16 +150,27 @@ vector<pair<ll, ll>> primefactors(ll n){
 
 void wavefunction(){
     ll n; cin >> n;
-    vector<ll> a(n), p(n);
-    vin(p,n); vin(a,n);
-    vector<ll> c;
-    c.push_back(a[0]);
-    for(ll i = 1; i < n; i++){
-    	if(a[i] != a[i-1]) c.push_back(a[i]);
+    vector<ll> pos(n+1);
+    for(ll i = 0; i < n; i++){
+        ll x; cin >> x;
+        pos[x] = i; 
     }
-    ll i = 0, j = 0;
-    while(i < n)
-}
+    vector<ll> a(n);
+    vin(a,n);
+    ll prev = -1, v = -1;
+    for(ll x : a){
+        if(x != v){
+            if(pos[x] < prev){
+                no;
+                return;
+            }
+            prev = pos[x];
+            v = x;
+        }
+    }
+    yes;
+} 	
+
 
 int main(){
 #ifndef ONLINE_JUDGE
